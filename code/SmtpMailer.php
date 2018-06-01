@@ -131,6 +131,11 @@ class SmtpMailer extends Mailer {
 		if(!isset($headers["X-Priority"])){
 			$headers["X-Priority"] = 3;
 		}
+		
+		if (!empty($headers['Reply-To'])) {
+			$this->mailer->AddReplyTo($headers['Reply-To']);
+			unset($headers['Reply-To']);
+		}
 
 		$this->mailer->ClearCustomHeaders();
 		foreach($headers as $header_name => $header_value){
